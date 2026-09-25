@@ -1,4 +1,3 @@
-# KFU-plan
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -10,15 +9,15 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="خطتك كفو - جامعة الملك فيصل">
 <meta property="og:description" content="تابع خطتك الدراسية، اكتشف المواد المتاحة، واحسب معدلك بسهولة - كلية الهندسة، جامعة الملك فيصل">
-<meta property="og:image" content="https://civilkfu.netlify.app/og-image.png">
+<meta property="og:image" content="https://engmohcee.github.io/KFU-plan/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://civilkfu.netlify.app/">
+<meta property="og:url" content="https://engmohcee.github.io/KFU-plan/">
 <meta property="og:locale" content="ar_SA">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="خطتك كفو - جامعة الملك فيصل">
 <meta name="twitter:description" content="تابع خطتك الدراسية، اكتشف المواد المتاحة، واحسب معدلك بسهولة - كلية الهندسة، جامعة الملك فيصل">
-<meta name="twitter:image" content="https://civilkfu.netlify.app/og-image.png">
+<meta name="twitter:image" content="https://engmohcee.github.io/KFU-plan/og-image.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
