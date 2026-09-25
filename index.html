@@ -9,15 +9,15 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="خطتك كفو - جامعة الملك فيصل">
 <meta property="og:description" content="تابع خطتك الدراسية، اكتشف المواد المتاحة، واحسب معدلك بسهولة - كلية الهندسة، جامعة الملك فيصل">
-<meta property="og:image" content="https://engmohcee.github.io/KFU-plan/og-image.png">
+<meta property="og:image" content="https://7kfuplan.github.io/KFU-plan/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://engmohcee.github.io/KFU-plan/">
+<meta property="og:url" content="https://7kfuplan.github.io/KFU-plan/">
 <meta property="og:locale" content="ar_SA">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="خطتك كفو - جامعة الملك فيصل">
 <meta name="twitter:description" content="تابع خطتك الدراسية، اكتشف المواد المتاحة، واحسب معدلك بسهولة - كلية الهندسة، جامعة الملك فيصل">
-<meta name="twitter:image" content="https://engmohcee.github.io/KFU-plan/og-image.png">
+<meta name="twitter:image" content="https://7kfuplan.github.io/KFU-plan/og-image.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
@@ -58,6 +58,7 @@ a{color:inherit;text-decoration:none}
 .hero-in{display:flex;align-items:center;gap:16px}
 .badge{flex:none;white-space:nowrap;width:68px;height:68px;border-radius:20px;background:var(--badge-bg);color:var(--badge-t);display:grid;place-items:center;font-weight:700;font-size:1.3rem;box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}
 .badge.emoji{font-size:2rem}
+.badge.wordmark{font-size:1.05rem;letter-spacing:1px}
 .hero h1{font-size:clamp(1.75rem,6vw,2.5rem);font-weight:700;line-height:1.35}
 .hero p{color:var(--hero-sub);font-weight:300;font-size:1.02rem;margin-top:4px;line-height:1.7}
 .pill{display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:11px 22px;border:1px solid var(--pill-b);background:var(--pill-bg);border-radius:999px;font-size:.95rem;font-weight:400}
@@ -2744,13 +2745,13 @@ function majorCards(mode){
   }).join('');
 }
 function renderHome(startTab){
-  document.title=LANG==='en'?'Kfu Plan - KFU':'خطتك كفو - جامعة الملك فيصل';
+  document.title=LANG==='en'?'Kfu Plan':'خطتك كفو';
   applyTheme(null); app.dataset.page='home'; app.dataset.major=''; cur=null;
   app.innerHTML=`
     <header class="hero"><div class="wrap">
       ${langToggleHTML()}
       <div class="hero-in">
-        <div class="badge">ك ف</div>
+        <div class="badge wordmark">كفو</div>
         <div><h1>${t('خطتك كفو')}</h1><p>${t('تابع خطتك الشجرية واعرف كم ساعة باقي لك للتخرج - جامعة الملك فيصل')}</p></div>
       </div>
       <div class="pill"><i></i>${t('اختر تخصصك للبدء')}</div>
@@ -2800,7 +2801,7 @@ const C=2*Math.PI*66;
 function renderPlan(m,startTab){
   cur=m;state=load(m);sel=null;filt=null;paths=[];svgReady=false;buildGraph(m);
   applyTheme(m.id);
-  document.title=mTitle(m)+' — '+(LANG==='en'?'Kfu Plan - KFU':'خطتك كفو - جامعة الملك فيصل');
+  document.title=mTitle(m)+' — '+(LANG==='en'?'Kfu Plan':'خطتك كفو');
   app.dataset.page='plan';app.dataset.major=m.id;
   app.innerHTML=`
     <header class="hero"><div class="wrap">
