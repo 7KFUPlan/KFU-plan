@@ -135,6 +135,27 @@ a.mcard:hover{transform:translateY(-4px);box-shadow:0 18px 34px -20px color-mix(
 .course .ccr{font-size:.52rem;opacity:.9}
 .course.done{background:var(--grn-t2,#5c7a49)}
 .course .stt2{position:absolute;top:5px;left:6px;font-size:.66rem;opacity:.85}
+.xwrap{flex:none;display:flex;position:relative}
+.course.xempty{background:#fff;color:var(--muted);border:1.5px dashed var(--gray-b);gap:3px}
+.course.xempty .xplus{font-size:1.05rem;line-height:1;font-weight:700;color:var(--acc)}
+.course.xempty .cname{font-weight:600}
+.course.xfill{box-shadow:inset 0 3px 0 rgba(255,255,255,.55);padding-top:18px}
+.xdel{position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:rgba(0,0,0,.38);color:#fff;font-size:.6rem;line-height:1;display:grid;place-items:center;z-index:2}
+.xdel:hover{background:rgba(0,0,0,.6)}
+.xnote{margin:12px 4px 0;color:var(--muted);font-size:.85rem;line-height:1.8;text-align:center}
+.xnote b{color:var(--acc-d)}
+.pick-card{background:var(--card);border-radius:20px;max-width:440px;width:100%;max-height:82vh;display:flex;flex-direction:column;padding:18px 14px 14px;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:onbUp .25s ease}
+.pick-card h3{margin:0 6px 2px;font-size:1.08rem}
+.pick-card>p{margin:0 6px 10px;color:var(--muted);font-size:.82rem}
+.pick-list{overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:2px;-webkit-overflow-scrolling:touch}
+.pick-item{display:flex;align-items:center;gap:10px;text-align:start;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#fff}
+.pick-item:hover{border-color:var(--acc);background:var(--tint)}
+.pick-item .pcode{flex:none;font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--acc-d);background:var(--soft);border-radius:8px;padding:4px 7px;direction:ltr}
+.pick-item .pname{flex:1;min-width:0;font-size:.9rem;font-weight:600;line-height:1.5}
+.pick-item .pname small{display:block;font-size:.76rem;font-weight:400;color:var(--muted)}
+.pick-item .pcr{flex:none;font-size:.74rem;color:var(--muted)}
+.pick-item[disabled]{opacity:.45;cursor:not-allowed}
+.pick-close{margin-top:10px;padding:11px;border-radius:14px;background:#f1f2ec;border:1px solid var(--line);font-weight:600;color:var(--muted)}
 .actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:26px}
 .reset{padding:11px 22px;border-radius:14px;background:#f1f2ec;border:1px solid var(--line);font-weight:600;font-size:.92rem;color:var(--muted)}
 .share-btn{padding:11px 22px;border-radius:14px;background:var(--tint);border:1px solid color-mix(in srgb,var(--acc) 30%,#fff);font-weight:600;font-size:.92rem;color:var(--acc-d)}
@@ -151,6 +172,7 @@ a.mcard:hover{transform:translateY(-4px);box-shadow:0 18px 34px -20px color-mix(
   .lvlrow{break-inside:avoid;page-break-inside:avoid}
   .lvlcells{flex-wrap:wrap!important;overflow:visible!important}
   .sem-all{display:none!important}
+  .xwrap.is-empty,.xdel,.xnote{display:none!important}
   .site-foot,.hero,.tabs,.scroll-hint2,.actions{display:none!important}
 }
 .onboard-ov{position:fixed;inset:0;background:rgba(20,20,18,.55);z-index:200;display:flex;align-items:flex-end;justify-content:center;padding:14px;backdrop-filter:blur(2px)}
@@ -188,10 +210,10 @@ a.mcard:hover{transform:translateY(-4px);box-shadow:0 18px 34px -20px color-mix(
 .lg-sel{background:var(--navy)}.lg-dep{background:var(--gray);border-color:var(--gray-b)!important}
 .lg-pre{background:#eef1fb;border:1.5px dashed var(--navy)!important}
 .scroll-hint{font-size:.82rem;color:var(--muted);margin:0 6px 8px}
-.tree-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px 0 6px}
-.tree-scroll{overflow-x:auto;direction:ltr;padding:0 18px 16px;-webkit-overflow-scrolling:touch}
-.tree{position:relative;display:grid;grid-template-columns:repeat(8,176px);column-gap:42px;width:max-content}
-.tcol{display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
+.tree-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px 0 14px}
+.tree-scroll{direction:ltr;padding:0 16px}
+.tree{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));column-gap:22px;width:100%}
+.tcol{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1;min-width:0}
 .thead{text-align:center;padding:8px 6px;border-radius:14px;background:var(--tint);border:1px solid color-mix(in srgb,var(--acc) 14%,#fff);direction:rtl}
 .thead small{display:block;color:var(--muted);font-size:.72rem}
 .thead b{font-size:.92rem;color:var(--acc-d);font-weight:700}
@@ -225,7 +247,40 @@ a.mcard:hover{transform:translateY(-4px);box-shadow:0 18px 34px -20px color-mix(
 .tnode.dep{background:var(--gray);border-color:var(--gray-b);color:#1f2937}
 .tnode.dep .tcode{background:rgba(255,255,255,.55);color:#2b3442}
 .tnode.pre{background:#eef1fb;border:1.5px dashed var(--navy)}
-.tnode.co{background:#f1f3f6;border:1.5px dashed var(--gray-b)}
+.tnode.co{background:#fff6e3;border:1.5px dashed #d08700;color:var(--ink)}
+.lg-co{width:22px!important;height:0!important;border:0!important;border-top:2.5px dashed #d08700!important;border-radius:0!important}
+svg.links .c{fill:none;stroke:#d08700;stroke-width:1.8;stroke-dasharray:5 4;stroke-linecap:round;opacity:.95;transition:opacity .25s}
+.has-sel svg.links .c{opacity:.12}
+.has-sel svg.links .c.on{opacity:1;stroke-width:2.6}
+.tree .tnode{padding:8px 8px}
+.tree .tnode .tcode{font-size:.68rem;padding:2px 6px;max-width:100%}
+.tree .tnode .tname{font-size:.72rem}
+.tree .tnode .tname small{font-size:.64rem}
+.tree .tnode .tcr{font-size:.64rem}
+.tree .tnode .stt{top:6px;right:6px;font-size:.66rem}
+.tree .tnode.st-done .stt{width:15px;height:15px;font-size:.56rem;top:6px}
+@media(max-width:900px){
+  .tree{column-gap:12px}
+  .tree .tnode{align-items:center;justify-content:center;text-align:center;padding:9px 2px;min-height:46px}
+  .tree .tnode .tname,.tree .tnode .tcr,.tree .tnode .stt{display:none}
+  .tree .tnode .tcode{align-self:center;background:none!important;padding:0;text-align:center;line-height:1.3;color:inherit;font-size:.7rem}
+  .tree .tnode.st-done{background:var(--grn-2)}
+  .tree .tnode.sel .tcode{color:#fff}
+}
+@media(max-width:600px){
+  .tree-card{margin-inline:-12px;border-radius:16px;padding:10px 0}
+  .tree-scroll{padding:0 7px}
+  .tree{column-gap:8px}
+  .tcol{gap:7px}
+  .tree .tnode{border-radius:8px;padding:5px 1px;min-height:40px;border-width:1px}
+  .tree .tnode .tcode{font-size:.56rem;font-weight:700;letter-spacing:-.2px}
+  .tree .tnode.st-open{box-shadow:0 0 0 1.5px rgba(31,164,99,.25)}
+  .tree .thead{padding:5px 1px;border-radius:8px}
+  .tree .thead small{font-size:.5rem}
+  .tree .thead b{font-size:.6rem}
+  svg.links .e{stroke-width:1}
+  svg.links .c{stroke-width:1.5;stroke-dasharray:3 2.5}
+}
 svg.links{position:absolute;left:0;top:0;pointer-events:none;z-index:0;overflow:visible}
 svg.links .e{fill:none;stroke:#c3c9bd;stroke-width:1.3;opacity:.75;transition:opacity .25s}
 .has-sel svg.links .e{opacity:.1}
@@ -452,12 +507,6 @@ const MAJORS = [
           "Islamic Culture",
           2,
           "الثقافة الإسلامية"
-        ],
-        [
-          "Eng 138",
-          "Fundamentals of Speech Communication",
-          2,
-          "أساسيات التواصل الخطابي"
         ]
       ],
       [
@@ -490,6 +539,12 @@ const MAJORS = [
           "Creed & Doctrines",
           2,
           "العقيدة والمذاهب"
+        ],
+        [
+          "Eng 138",
+          "Fundamentals of Speech Communication",
+          2,
+          "أساسيات التواصل الخطابي"
         ]
       ],
       [
@@ -1912,12 +1967,6 @@ const MAJORS = [
           "English Composition II",
           2,
           "تعبير انجليزي 2"
-        ],
-        [
-          "Eng 138",
-          "Fundamentals of Speech Communication",
-          2,
-          "أساسيات التواصل الخطابي"
         ]
       ],
       [
@@ -2000,6 +2049,12 @@ const MAJORS = [
           "Creed and doctrines",
           2,
           "العقيدة والمذاهب"
+        ],
+        [
+          "Eng 138",
+          "Fundamentals of Speech Communication",
+          2,
+          "أساسيات التواصل الخطابي"
         ]
       ],
       [
@@ -2188,16 +2243,24 @@ const CODES={civil:'CEE',electrical:'EE',mechanical:'ME',chemical:'ChE',biomedic
 const THEME_KEYS=Object.keys(THEMES.civil);
 
 /* ---------- المتطلبات السابقة (مبنية على الخطط الرسمية) ---------- */
-const PRE_COMMON={"Math 145": ["Math 144"], "Math 244": ["Math 145"], "Math 240": ["Math 145"], "Math 215": ["Math 145"], "Math 246": ["Math 145"], "Phys 141": ["Phys 140"], "Phys 144": ["Phys 140"], "Phys 145": ["Phys 141"], "Chem 142": ["Chem 140"], "Chem 143": ["Chem 142"], "Chem 242": ["Chem 142"], "Chem 243": ["Chem 142"], "Eng 134": ["Eng 133"], "Eng 137": ["Eng 134"], "Eng 138": ["Eng 133"], "CS 204": ["Math 144"], "Engr 105": ["Engr 100"], "Engr 201": ["Phys 140"], "Engr 202": ["Engr 201"], "Engr 203": ["Engr 201"], "Engr 206": ["Phys 141"], "Engr 205": ["Chem 142"], "Engr 223": ["Math 144", "Phys 140"], "Engr 307": ["Engr 100"], "Engr 310": ["Math 240", "CS 204", "Engr 105"], "Engr 309": ["Engr 203", "Math 240"], "Engr 312": ["Engr 309"], "Engr 340": ["Math 145"], "Engr 303": ["Phys 141", "Chem 142"], "Engr 209": ["Engr 202"], "ME 202": ["Chem 140", "Phys 141", "Math 145"]};
-const PRE_BY_MAJOR={"civil": {"CEE 272": ["Math 144", "Engr 106"], "CEE 282": ["Chem 140", "CEE 101"], "CEE 360": ["CEE 282", "Engr 202"], "CEE 310": ["Engr 202", "Math 244"], "CEE 340": ["CEE 272", "CEE 282"], "CEE 309": ["Math 145"], "CEE 335": ["Engr 309"], "CEE 330": ["CEE 282", "CEE 310"], "CEE 350": ["Engr 309", "Chem 142"], "CEE 390": ["Engr 106"], "CEE 495": ["Engr 307"], "CEE 496": ["CEE 495"]}, "mechanical": {"ME 102": ["Engr 106"], "ME 203": ["ME 202"], "ME 206": ["Engr 206"], "ME 331": ["Engr 203", "Math 240"], "ME 312": ["Engr 203", "Math 240", "Math 246"], "ME 325": ["Engr 309", "Engr 310", "Math 244"], "ME 332": ["Engr 205", "Engr 202", "ME 331", "ME 102"], "ME 333": ["ME 312"], "ME 204": ["ME 203", "ME 206"], "ME 425": ["ME 325", "ME 312"], "ME 460": ["Engr 205"], "ME 495": ["ME 332", "ME 325", "Engr 307"], "ME 441": ["ME 333"], "ME 442": ["Engr 206"], "ME 422": ["ME 203", "ME 325"], "ME 496": ["ME 495"]}, "chemical": {"ChE 201": ["Phys 140", "Engr 106"], "ChE 203": ["Chem 142"], "ChE 204": ["ChE 201"], "ChE 302": ["ChE 204"], "ChE 301": ["ChE 203"], "ChE 303": ["ChE 204"], "ChE 308": ["ChE 302", "Math 244"], "ChE 304": ["ChE 301"], "ChE 307": ["Bio 140"], "ChE 306": ["ChE 302", "ChE 303", "Engr 206", "Eng 137"], "ChE 401": ["ChE 308"], "ChE 402": ["Engr 223", "Engr 307", "Engr 205", "ChE 401"], "ChE 405": ["ChE 304"], "ChE 495": ["ChE 304"], "ChE 403": ["ChE 401"], "ChE 404": ["Math 240", "ChE 304"], "ChE 496": ["ChE 495"]}, "electrical": {"EE 231": ["Math 145"], "EE 232": ["EE 231"], "EE 241": ["Phys 141", "Math 240"], "EE 247": ["EE 241"], "EE 243": ["EE 241", "Chem 142"], "EE 248": ["EE 247", "EE 243"], "EE 242": ["EE 241", "Math 215"], "Math 215": ["Math 145"], "EE 330": ["Math 240", "Math 215", "EE 242"], "EE 244": ["EE 243"], "EE 233": ["EE 231", "CS 204"], "EE 234": ["EE 232", "EE 233"], "EE 331": ["Math 244", "EE 242"], "EE 335": ["EE 242", "EE 331"], "EE 336": ["EE 335"], "EE 332": ["EE 330", "Engr 340"], "EE 333": ["EE 248", "EE 332"], "EE 429": ["EE 233", "EE 330"], "EE 430": ["EE 330"], "EE 431": ["EE 234", "EE 429", "EE 430"], "EE 434": ["EE 330", "Engr 310"], "EE 495": ["EE 335", "Engr 307", "Eng 137"], "EE 496": ["EE 495"]}, "biomedical": {"Engr 105": ["Math 144"], "Engr 223": ["Math 145", "Phys 140"], "BME 316": ["Engr 106"], "EE 247": ["Engr 206"], "BME 202": ["Chem 142"], "Engr 303": ["Phys 141", "Chem 142", "Math 240"], "BME 310": ["Engr 206"], "BME 313": ["BME 310"], "BME 204": ["Chem 142"], "Engr 310": ["Math 240"], "BME 312": ["BME 310"], "BME 304": ["BME 204"], "BME 220": ["Phys 141", "BME 202", "BME 204"], "BME 322": ["BME 304", "Engr 303"], "Engr 340": ["Math 145"], "BME 320": ["Engr 223", "BME 220", "BME 204"], "BME 410": ["BME 312", "BME 304"], "BME 411": ["BME 410"], "BME 314": ["BME 304", "Engr 206"], "BME 450": ["BME 410"], "BME 412": ["BME 410"], "BME 413": ["BME 412"], "BME 330": ["BME 314", "BME 312"], "BME 452": ["BME 450"], "Engr 307": ["Engr 100"], "BME 440": ["BME 412"], "BME 430": ["BME 314"], "BME 331": ["BME 330"]}};
-const CO_REQ=[["Phys 144", "Phys 140"], ["Phys 145", "Phys 141"], ["Chem 143", "Chem 142"], ["Engr 105", "Math 145"], ["CEE 281", "CEE 282"], ["CEE 361", "CEE 360"], ["CEE 341", "CEE 340"], ["EE 247", "EE 241"], ["EE 248", "EE 243"], ["EE 336", "EE 335"], ["EE 333", "EE 332"], ["ChE 410", "ChE 402"], ["Chem 242", "ChE 301"], ["Math 240", "ChE 204"], ["ChE 304", "ChE 307"], ["BME 313", "BME 310"], ["BME 411", "BME 410"], ["BME 413", "BME 412"], ["BME 331", "BME 330"]];
+const PRE_COMMON={"Math 145": ["Math 144"], "Math 244": ["Math 145"], "Math 240": ["Math 145"], "Math 215": ["Math 145"], "Math 246": ["Math 145"], "Phys 141": ["Phys 140"], "Phys 144": ["Phys 140"], "Phys 145": ["Phys 141"], "Chem 142": ["Chem 140"], "Chem 143": ["Chem 142"], "Chem 242": ["Chem 142"], "Chem 243": ["Chem 142"], "Eng 134": ["Eng 133"], "Eng 137": ["Eng 134", "Eng 138"], "CS 204": ["Math 144"], "Engr 105": ["Engr 100"], "Engr 201": ["Phys 140"], "Engr 202": ["Engr 201"], "Engr 203": ["Engr 201"], "Engr 206": ["Phys 141"], "Engr 205": ["Chem 142"], "Engr 223": ["Math 144", "Phys 140"], "Engr 307": ["Engr 100"], "Engr 310": ["Math 240", "CS 204", "Engr 105"], "Engr 309": ["Engr 203", "Math 240"], "Engr 312": ["Engr 309"], "Engr 340": ["Math 145"], "Engr 303": ["Phys 141", "Chem 142"], "Engr 209": ["Engr 202"], "ME 202": ["Chem 140", "Phys 141", "Math 145"]};
+const PRE_BY_MAJOR={"civil": {"Eng 137": ["Eng 134"], "CEE 272": ["Math 144", "Engr 106"], "CEE 282": ["Chem 140", "CEE 101"], "CEE 360": ["CEE 282", "Engr 202"], "CEE 310": ["Engr 202", "Math 244"], "CEE 340": ["CEE 272", "CEE 282"], "CEE 309": ["Math 145"], "CEE 335": ["Engr 309"], "CEE 330": ["CEE 282", "CEE 310"], "CEE 350": ["Engr 309", "Chem 142"], "CEE 390": ["Engr 106"], "CEE 495": ["Engr 307"], "CEE 496": ["CEE 495"]}, "mechanical": {"ME 102": ["Engr 106"], "ME 203": ["ME 202"], "ME 206": ["Engr 206"], "ME 331": ["Engr 203", "Math 240"], "ME 312": ["Engr 203", "Math 240", "Math 246"], "ME 325": ["Engr 309", "Engr 310", "Math 244"], "ME 332": ["Engr 205", "Engr 202", "ME 331", "ME 102"], "ME 333": ["ME 312"], "ME 204": ["ME 203", "ME 206"], "ME 425": ["ME 325", "ME 312"], "ME 460": ["Engr 205"], "ME 495": ["ME 332", "ME 325", "Engr 307"], "ME 441": ["ME 333"], "ME 442": ["Engr 206"], "ME 422": ["ME 203", "ME 325"], "ME 496": ["ME 495"]}, "chemical": {"ChE 201": ["Phys 140", "Engr 106"], "ChE 203": ["Chem 142"], "ChE 204": ["ChE 201"], "ChE 302": ["ChE 204"], "ChE 301": ["ChE 203"], "ChE 303": ["ChE 204"], "ChE 308": ["ChE 302", "Math 244"], "ChE 304": ["ChE 301"], "ChE 307": ["Bio 140"], "ChE 306": ["ChE 302", "ChE 303", "Engr 206", "Eng 137"], "ChE 401": ["ChE 308"], "ChE 402": ["Engr 223", "Engr 307", "Engr 205", "ChE 401"], "ChE 405": ["ChE 304"], "ChE 495": ["ChE 304"], "ChE 403": ["ChE 401"], "ChE 404": ["Math 240", "ChE 304"], "ChE 496": ["ChE 495"]}, "electrical": {"EE 231": ["Math 145"], "EE 232": ["EE 231"], "EE 241": ["Phys 141", "Math 240"], "EE 247": ["EE 241"], "EE 243": ["EE 241", "Chem 142"], "EE 248": ["EE 247", "EE 243"], "EE 242": ["EE 241", "Math 215"], "Math 215": ["Math 145"], "EE 330": ["Math 240", "Math 215", "EE 242"], "EE 244": ["EE 243"], "EE 233": ["EE 231", "CS 204"], "EE 234": ["EE 232", "EE 233"], "EE 331": ["Math 244", "EE 242"], "EE 335": ["EE 242", "EE 331"], "EE 336": ["EE 335"], "EE 332": ["EE 330", "Engr 340"], "EE 333": ["EE 248", "EE 332"], "EE 429": ["EE 233", "EE 330"], "EE 430": ["EE 330"], "EE 431": ["EE 234", "EE 429", "EE 430"], "EE 434": ["EE 330", "Engr 310"], "EE 495": ["EE 335", "Engr 307", "Eng 137"], "EE 496": ["EE 495"]}, "biomedical": {"Eng 138": ["Eng 137"], "Engr 105": ["Math 144"], "Engr 223": ["Math 145", "Phys 140"], "BME 316": ["Engr 106"], "EE 247": ["Engr 206"], "BME 202": ["Chem 142"], "Engr 303": ["Phys 141", "Chem 142", "Math 240"], "BME 310": ["Engr 206"], "BME 313": ["BME 310"], "BME 204": ["Chem 142"], "Engr 310": ["Math 240"], "BME 312": ["BME 310"], "BME 304": ["BME 204"], "BME 220": ["Phys 141", "BME 202", "BME 204"], "BME 322": ["BME 304", "Engr 303"], "Engr 340": ["Math 145"], "BME 320": ["Engr 223", "BME 220", "BME 204"], "BME 410": ["BME 312", "BME 304"], "BME 411": ["BME 410"], "BME 314": ["BME 304", "Engr 206"], "BME 450": ["BME 410"], "BME 412": ["BME 410"], "BME 413": ["BME 412"], "BME 330": ["BME 314", "BME 312"], "BME 452": ["BME 450"], "Engr 307": ["Engr 100"], "BME 440": ["BME 412"], "BME 430": ["BME 314"], "BME 331": ["BME 330"]}};
+/* المتزامنات (Co-requisite) حسب الخطط الرسمية: [مادة, المادة المتزامنة معها] */
+const CO_COMMON=[["Phys 144","Phys 140"],["Phys 145","Phys 141"],["Chem 143","Chem 142"]];
+const CO_BY_MAJOR={
+  civil:[["Phys 140","Math 144"],["Engr 105","Math 145"],["Eng 138","Eng 134"],["CEE 281","CEE 282"],["CEE 282","Engr 202"],["CEE 361","CEE 360"],["CEE 360","Engr 309"],["CEE 361","Eng 137"],["CEE 341","CEE 340"],["CEE 345","CEE 330"],["CEE 470","CEE 330"]],
+  electrical:[["Phys 140","Math 144"],["Engr 105","Math 145"],["Eng 138","Eng 134"],["EE 232","EE 231"],["EE 247","EE 241"],["EE 241","Math 240"],["EE 248","EE 243"],["EE 242","Math 215"],["EE 234","EE 233"],["EE 336","EE 335"],["EE 333","EE 332"],["EE 431","EE 429"],["EE 431","EE 430"]],
+  mechanical:[["Phys 140","Math 144"],["Engr 105","Math 145"],["Eng 138","Eng 134"],["ME 206","Eng 137"],["ME 495","ME 460"]],
+  chemical:[["Phys 140","Math 144"],["Engr 105","Math 145"],["Eng 138","Eng 134"],["ChE 204","Math 240"],["ChE 301","Chem 242"],["ChE 304","Chem 243"],["ChE 307","ChE 304"],["ChE 401","Engr 310"],["ChE 410","ChE 402"],["ChE 495","ChE 402"],["ChE 406","ChE 403"],["ChE 406","ChE 304"]],
+  biomedical:[["EE 247","Engr 206"],["BME 313","BME 310"],["BME 322","BME 304"],["BME 411","BME 410"],["BME 413","BME 412"],["BME 331","BME 330"]]
+};
 
 /* --------- تجهيز الخطط --------- */
 MAJORS.forEach(m=>{
   const seen={};
   m.sems=m.plan.map((sem,ci)=>sem.map(([code,name,cr,ar])=>{
     const k=code+'|'+name; seen[k]=(seen[k]||0)+1;
-    return {id:k+'|'+seen[k],code,name,ar:ar||'',cr,col:ci};
+    return {id:k+'|'+seen[k],code,name,ar:ar||'',cr,col:ci,uni:/^(1900-|SSC |Dolc |Deic )xxx$/i.test(code)};
   }));
   m.total=m.sems.flat().reduce((s,c)=>s+c.cr,0);
 });
@@ -2217,9 +2280,10 @@ function buildGraph(m){
       directPre[t].push(s); directDep[s].push(t); m.edges.push([s,t]);
     });
   });
-  CO_REQ.forEach(([lab,th])=>{
-    const a=byCode[lab],b=byCode[th]; if(a===undefined||b===undefined)return;
-    m.co[a].push(b); m.co[b].push(a);
+  m.coEdges=[];
+  CO_COMMON.concat(CO_BY_MAJOR[m.id]||[]).forEach(([x,y])=>{
+    const a=byCode[x],b=byCode[y]; if(a===undefined||b===undefined||a===b||m.co[a].includes(b))return;
+    m.co[a].push(b); m.co[b].push(a); m.coEdges.push([a,b]);
   });
   function closure(adj){
     return all.map((_,i)=>{
@@ -2249,6 +2313,52 @@ function load(m){
   }catch(e){return new Set()}
 }
 function save(m,set){ try{localStorage.setItem(KEY(m.id),JSON.stringify([...set]))}catch(e){} }
+/* --------- المواد الإضافية (متطلبات الجامعة / بلاك بورد) — خانتين لكل مستوى --------- */
+const BB_COURSES=[
+  [101,'Creed and Doctrines','العقيدة والمذاهب',2],
+  [102,'Islamic Culture','الثقافة الإسلامية',2],
+  [103,'Islamic Morals and Ethics','الأخلاق الإسلامية وآداب المهنة',2],
+  [104,'Studies in the Biography of the Prophet','دراسات في السيرة النبوية',2],
+  [105,'Medical Jurisprudence','الفقه الطبي',2],
+  [106,'Economics & Politics in Islam','الاقتصاد والسياسة في الإسلام',2],
+  [107,'Islamic Social & Family Behavior','النظام الاجتماعي والسلوك الأسري',2],
+  [108,'Management & Entrepreneurship','الإدارة وريادة الأعمال',2],
+  [109,'Health & Fitness','صحة ولياقة',2],
+  [110,'Research Skills','مهارات البحث',2],
+  [111,'Volunteer Work','العمل التطوعي',2],
+  [112,'Medicine: Type and Use','الدواء: النوع والاستخدام',2],
+  [113,'Human Rights in Islam','حقوق الإنسان في الإسلام',2],
+  [114,'Food and Nutrition','الغذاء والتغذية',2],
+].map(([n,name,ar,cr])=>({n,code:'SSC '+n,name,ar,cr}));
+const BB_BY_N=Object.fromEntries(BB_COURSES.map(c=>[c.n,c]));
+const EXTRA_SLOTS=2;
+const XKEY=id=>'grad-extra-v1:'+id;
+function loadExtra(m){
+  const blank=m.sems.map(()=>Array(EXTRA_SLOTS).fill(null));
+  try{
+    const raw=JSON.parse(localStorage.getItem(XKEY(m.id))||'null');
+    if(Array.isArray(raw))raw.forEach((row,i)=>{
+      if(!blank[i]||!Array.isArray(row))return;
+      row.slice(0,EXTRA_SLOTS).forEach((x,k)=>{ if(x&&BB_BY_N[x.n])blank[i][k]={n:x.n,done:!!x.done}; });
+    });
+  }catch(e){}
+  return blank;
+}
+function saveExtra(m,x){ try{localStorage.setItem(XKEY(m.id),JSON.stringify(x))}catch(e){} }
+/* اختياري الجامعة: ينحسب من المواد الإضافية المنجزة مادتين فقط (حسب عدد خانات الاختياري في الخطة) */
+function syncUni(m){
+  const slots=m.sems.flat().filter(c=>c.uni);
+  const n=Math.min(slots.length,extra.flat().filter(x=>x&&x.done).length);
+  slots.forEach((c,i)=>i<n?state.add(c.id):state.delete(c.id));
+  return n;
+}
+/* أرقام مواد الجامعة الموجودة أصلاً في خطة التخصص (مثل 101 و 102) */
+function planBB(m){
+  const set=new Set();
+  m.sems.flat().forEach(c=>{const r=/^(?:1900-|SSC ?)(\d{3})$/i.exec(c.code); if(r)set.add(+r[1]);});
+  set.add(101); set.add(102);
+  return set;
+}
 function doneHours(m,set){ return m.sems.flat().reduce((s,c)=>s+(set.has(c.id)?c.cr:0),0); }
 async function shareProgress(m){
   const d=doneHours(m,state),rem=m.total-d,pct=m.total?Math.round(d/m.total*100):0;
@@ -2271,6 +2381,7 @@ async function shareProgress(m){
   wrap.querySelectorAll('.lvlcells').forEach(el=>{ el.style.flexWrap='wrap'; el.style.overflowX='visible'; });
   wrap.querySelectorAll('.lvlrow').forEach(el=>{ el.style.flexWrap='wrap'; });
   wrap.querySelectorAll('.sem-all').forEach(el=>{ el.style.display='none'; });
+  wrap.querySelectorAll('.xwrap.is-empty,.xdel').forEach(el=>el.remove());
   document.body.appendChild(wrap);
   try{
     const canvas=await html2canvas(wrap,{backgroundColor:bg,scale:2,useCORS:true,windowWidth:wrap.scrollWidth,width:wrap.scrollWidth});
@@ -2423,6 +2534,17 @@ const T={
 "🎓 خلّصت كل ساعات التخرج":"🎓 You've finished all your graduation hours!",
 "تمت إعادة التعيين":"Progress reset",
 "تحديد الكل":"Select all",
+"متزامنة (تؤخذ مع بعض)":"Co-requisite (taken together)",
+"مادة إضافية":"Extra course",
+"اختر مادة":"Pick a course",
+"اختر مادة إضافية":"Pick an extra course",
+"مواد متطلبات الجامعة (بلاك بورد)":"University requirement courses (Blackboard)",
+"إغلاق":"Close",
+"موجودة بخطتك":"Already in your plan",
+"مختارة":"Already picked",
+"حذف المادة":"Remove course",
+"تمت إضافة المادة ✅":"Course added ✅",
+"تم حذف المادة":"Course removed",
 "إلغاء الكل":"Deselect all",
 };
 function t(s){ return LANG==='en' ? (T[s]||s) : s; }
@@ -2795,11 +2917,12 @@ function showHomeTab(t){
 }
 
 /* --------- صفحة التخصص --------- */
+let extra=null;
 let cur=null,state=null,sel=null,filt=null,tab='grad',paths=[],svgReady=false;
 const C=2*Math.PI*66;
 
 function renderPlan(m,startTab){
-  cur=m;state=load(m);sel=null;filt=null;paths=[];svgReady=false;buildGraph(m);
+  cur=m;state=load(m);extra=loadExtra(m);syncUni(m);save(m,state);sel=null;filt=null;paths=[];coPaths=[];svgReady=false;buildGraph(m);
   applyTheme(m.id);
   document.title=mTitle(m)+' — '+(LANG==='en'?'Kfu Plan':'خطتك كفو');
   app.dataset.page='plan';app.dataset.major=m.id;
@@ -2858,15 +2981,17 @@ function renderPlan(m,startTab){
                 <button class="sem-all" data-all="${i}"></button>
               </div>
               <div class="lvlcells">
-                ${list.map(c=>`
+                ${list.filter(c=>!c.uni).map(c=>`
                   <button class="course" data-id="${esc(c.id)}" aria-pressed="false">
                     <b>${esc(c.code)}</b>
                     <span class="cname">${esc(c.name)}<small>${esc(c.ar)}</small></span>
                     <span class="ccr">(${c.cr})</span>
                   </button>`).join('')}
+                ${Array.from({length:EXTRA_SLOTS},(_,k)=>`<div class="xwrap" data-lv="${i}" data-k="${k}"></div>`).join('')}
               </div>
             </div>`).join('')}
         </div>
+        <p class="xnote" id="xnote"></p>
         <div class="actions">
           <button class="reset" id="reset">${t('↺ إعادة تعيين التقدّم')}</button>
           <button class="share-btn" id="shareBtn">${t('🖨️ شارك/اطبع تقدمك')}</button>
@@ -2884,13 +3009,13 @@ function renderPlan(m,startTab){
           <span><i class="lg-sel"></i>${t('المادة المختارة')}</span>
           <span><i class="lg-dep"></i>${t('تفتحها')}</span>
           <span><i class="lg-pre"></i>${t('تحتاجها قبلها')}</span>
+          <span><i class="lg-co"></i>${t('متزامنة (تؤخذ مع بعض)')}</span>
         </div>
-        <p class="scroll-hint">${t('↔ اسحب يميناً ويساراً لتنقّل بين الفصول')}</p>
         <div class="tree-card"><div class="tree-scroll"><div class="tree" id="tree">
           <svg class="links" id="links"></svg>
           ${m.sems.map((list,ci)=>`
             <div class="tcol">
-              <div class="thead"><small>${YEARS()[ci>>1]}</small><b>${LANG==='en'?'Semester '+(ci%2?2:1):'الفصل '+(ci%2?'الثاني':'الأول')}</b></div>
+              <div class="thead"><small>${LANG==='en'?'Level':'المستوى'}</small><b>${LANG==='en'?ci+1:LEVELS_AR[ci].replace('المستوى ','')}</b></div>
               ${list.map(c=>`
                 <button class="tnode" data-i="${c.i}">
                   <span class="stt"></span>
@@ -2913,10 +3038,19 @@ function renderPlan(m,startTab){
     showTab(b.dataset.tab);
   }));
   app.querySelectorAll('.course').forEach(b=>b.addEventListener('click',e=>toggle(b,e)));
+  drawExtra();
+  app.querySelector('.lvltable').addEventListener('click',e=>{
+    const w=e.target.closest('.xwrap'); if(!w)return;
+    const lv=+w.dataset.lv,k=+w.dataset.k,x=extra[lv][k];
+    if(e.target.closest('.xdel')){ extra[lv][k]=null; saveExtra(cur,extra); syncUni(cur); drawExtra(); afterChange(0,0,false); toast(t('تم حذف المادة')); return; }
+    if(!x){ openPicker(lv,k); return; }
+    x.done=!x.done; saveExtra(cur,extra); syncUni(cur); drawExtra();
+    afterChange(e.clientX,e.clientY,x.done);
+  });
   app.querySelectorAll('.sem-all').forEach(b=>b.addEventListener('click',e=>toggleSem(+b.dataset.all,e)));
   $('reset').addEventListener('click',()=>{
     const q=LANG==='en'?`Are you sure you want to clear all your progress in ${mTitle(m)}?`:'متأكد تبي تمسح كل تقدّمك في '+m.name+'؟';
-    if(confirm(q)){state=new Set();save(m,state);refresh(true);toast(t('تمت إعادة التعيين'))}
+    if(confirm(q)){state=new Set();save(m,state);extra=m.sems.map(()=>Array(EXTRA_SLOTS).fill(null));saveExtra(m,extra);drawExtra();refresh(true);toast(t('تمت إعادة التعيين'))}
   });
   $('shareBtn').addEventListener('click',()=>shareProgress(m));
   app.querySelectorAll('.tnode').forEach(n=>n.addEventListener('click',()=>select(+n.dataset.i)));
@@ -2943,7 +3077,7 @@ function showTab(t){
 /* ---- تحديث الأرقام والألوان ---- */
 function refresh(initial){
   const m=cur,d=doneHours(m,state),rem=m.total-d,pct=m.total?Math.round(d/m.total*100):0;
-  app.querySelectorAll('.course').forEach(b=>{
+  app.querySelectorAll('.course[data-id]').forEach(b=>{
     const on=state.has(b.dataset.id);b.classList.toggle('done',on);b.setAttribute('aria-pressed',on);
   });
   const stt=computeStatus(m,state),ICON={done:'✓',open:'🔓',lock:'🔒'};
@@ -2957,9 +3091,9 @@ function refresh(initial){
   $('fLock').textContent=stt.filter(x=>x==='lock').length;
   if(!initial&&$('tinfo'))$('tinfo').innerHTML=infoHTML();
   m.sems.forEach((list,i)=>{
-    const n=list.filter(c=>state.has(c.id)).length;
+    const vis=list.filter(c=>!c.uni),n=vis.filter(c=>state.has(c.id)).length;
     const btn=app.querySelector(`[data-all="${i}"]`);
-    if(btn)btn.textContent=n===list.length?t('إلغاء الكل'):t('تحديد الكل');
+    if(btn)btn.textContent=n===vis.length?t('إلغاء الكل'):t('تحديد الكل');
   });
   $('fill').style.strokeDashoffset=C*(1-(m.total?d/m.total:0));
   $('dn').textContent=d;
@@ -2969,6 +3103,61 @@ function refresh(initial){
   $('heroPill').textContent=rem===0&&m.total>0?t('🎓 خلّصت كل ساعات التخرج'):(LANG==='en'?`${rem} hrs left to graduate`:`متبقي ${rem} ساعة للتخرج`);
   countTo($('rem'),rem,initial);
   $('summary').classList.toggle('done',rem===0&&m.total>0);
+}
+/* ---- المواد الإضافية ---- */
+function drawExtra(){
+  if(!cur||!extra)return;
+  app.querySelectorAll('.xwrap').forEach(w=>{
+    const x=extra[+w.dataset.lv][+w.dataset.k],c=x&&BB_BY_N[x.n];
+    w.classList.toggle('is-empty',!c);
+    w.innerHTML=c
+      ? `<button class="course xfill${x.done?' done':''}" aria-pressed="${!!x.done}">
+           <b>${esc(c.code)}</b>
+           <span class="cname">${esc(c.name)}<small>${esc(c.ar)}</small></span>
+           <span class="ccr">(${c.cr})</span>
+         </button>
+         <button class="xdel" aria-label="${t('حذف المادة')}" title="${t('حذف المادة')}">✕</button>`
+      : `<button class="course xempty">
+           <span class="xplus">＋</span>
+           <span class="cname">${t('مادة إضافية')}</span>
+           <span class="ccr">${t('اختر مادة')}</span>
+         </button>`;
+  });
+  const all=extra.flat().filter(Boolean),dn=all.filter(x=>x.done).length;
+  const cap=cur.sems.flat().filter(c=>c.uni).length,cnt=Math.min(cap,dn);
+  const note=$('xnote');
+  if(note)note.innerHTML=LANG==='en'
+    ? `University electives: only <b>${cap}</b> courses count toward graduation hours (${cap*2} hrs) — counted so far <b>${cnt}/${cap}</b>.`+(dn>cap?` You marked ${dn} done; the extra ${dn-cap} don't add hours.`:all.length?'':' Tap a ＋ slot at the end of any level to pick one.')
+    : `اختياري الجامعة: ينحسب منها <b>${cap===2?'مادتين':cap+' مواد'}</b> فقط ضمن ساعات التخرج (${cap*2} ساعات) — المحسوب لك <b>${cnt}/${cap}</b>.`+(dn>cap?` علّمت ${dn} مواد منجزة، والزايد (${dn-cap}) ما يزيد الساعات.`:all.length?'':' اضغط على خانة ＋ في آخر أي مستوى واختر المادة.');
+}
+function openPicker(lv,k){
+  const m=cur,inPlan=planBB(m),picked=new Set(extra.flat().filter(Boolean).map(x=>x.n));
+  const ov=document.createElement('div');
+  ov.className='onboard-ov top';
+  ov.innerHTML=`<div class="pick-card" role="dialog" aria-modal="true">
+    <h3>${t('اختر مادة إضافية')} — ${LEVELS()[lv]}</h3>
+    <p>${t('مواد متطلبات الجامعة (بلاك بورد)')}</p>
+    <div class="pick-list">
+      ${BB_COURSES.map(c=>{
+        const why=inPlan.has(c.n)?t('موجودة بخطتك'):picked.has(c.n)?t('مختارة'):'';
+        return `<button class="pick-item" data-n="${c.n}" ${why?'disabled':''}>
+          <span class="pcode">${esc(c.code)}</span>
+          <span class="pname">${esc(LANG==='en'?c.name:c.ar)}<small>${esc(LANG==='en'?c.ar:c.name)}</small></span>
+          <span class="pcr">${why||c.cr+' '+hrsWord()}</span>
+        </button>`;}).join('')}
+    </div>
+    <button class="pick-close">${t('إغلاق')}</button>
+  </div>`;
+  document.body.appendChild(ov);
+  const close=()=>{ ov.remove(); removeEventListener('keydown',onKey); };
+  const onKey=e=>{ if(e.key==='Escape')close(); };
+  addEventListener('keydown',onKey);
+  ov.addEventListener('click',e=>{
+    if(e.target===ov||e.target.closest('.pick-close')){ close(); return; }
+    const b=e.target.closest('.pick-item'); if(!b||b.disabled)return;
+    extra[lv][k]={n:+b.dataset.n,done:false};
+    saveExtra(m,extra); drawExtra(); close(); toast(t('تمت إضافة المادة ✅'));
+  });
 }
 function countTo(el,to,instant){
   const from=+el.textContent||0;
@@ -2992,7 +3181,7 @@ function toggle(b,e){
   afterChange(e.clientX||r.left+r.width/2,e.clientY||r.top+r.height/2,!was);
 }
 function toggleSem(i,e){
-  const list=cur.sems[i],all=list.every(c=>state.has(c.id));
+  const list=cur.sems[i].filter(c=>!c.uni),all=list.every(c=>state.has(c.id));
   list.forEach(c=>all?state.delete(c.id):state.add(c.id));
   afterChange(e.clientX,e.clientY,!all);
   if(!all)toast(t('تم تحديد مواد الفصل ✅'));
@@ -3004,8 +3193,27 @@ function select(i){ sel=(sel===i)?null:i; filt=null; applySel(); }
 function edgePath(a,b,tr){
   const A=a.getBoundingClientRect(),B=b.getBoundingClientRect();
   const x1=A.right-tr.left,y1=A.top+A.height/2-tr.top,x2=B.left-tr.left,y2=B.top+B.height/2-tr.top;
-  const dx=Math.max(28,(x2-x1)*.45);
+  const dx=Math.max(4,(x2-x1)*.45);
   return `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2-2},${y2}`;
+}
+/* خط المتزامنات: قوس جانبي لو المادتين بنفس المستوى، ومنحنى لو بمستويين مختلفين */
+let coPaths=[];
+function coPath(m,nodes,i,j,tr){
+  let a=m.all[i],b=m.all[j];
+  if(a.col===b.col){
+    let A=nodes[i].getBoundingClientRect(),B=nodes[j].getBoundingClientRect();
+    if(A.top>B.top)[A,B]=[B,A];
+    const cols=$('tree').querySelectorAll('.tcol');
+    const gap=cols.length>1?cols[1].getBoundingClientRect().left-cols[0].getBoundingClientRect().right:16;
+    const x=A.right-tr.left,y1=A.top+A.height/2-tr.top,y2=B.top+B.height/2-tr.top;
+    const g=Math.max(3,Math.min(gap*.7,5+(y2-y1)*.12,18));
+    return `M${x},${y1} C${x+g*1.35},${y1} ${x+g*1.35},${y2} ${x},${y2}`;
+  }
+  if(a.col>b.col)[i,j]=[j,i];
+  const A=nodes[i].getBoundingClientRect(),B=nodes[j].getBoundingClientRect();
+  const x1=A.right-tr.left,y1=A.top+A.height/2-tr.top,x2=B.left-tr.left,y2=B.top+B.height/2-tr.top;
+  const dx=Math.max(4,(x2-x1)*.45);
+  return `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}`;
 }
 function drawLinks(){
   const m=cur; if(!m)return;
@@ -3021,9 +3229,14 @@ function drawLinks(){
       const p=document.createElementNS('http://www.w3.org/2000/svg','path');
       p.setAttribute('class','e');p.setAttribute('marker-end','url(#ah)');p.__e=e;svg.appendChild(p);return p;
     });
+    coPaths=m.coEdges.map(e=>{
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('class','c');p.__e=e;svg.appendChild(p);return p;
+    });
     svgReady=true;
   }
   paths.forEach(p=>p.setAttribute('d',edgePath(nodes[p.__e[0]],nodes[p.__e[1]],tr)));
+  coPaths.forEach(p=>p.setAttribute('d',coPath(m,nodes,p.__e[0],p.__e[1],tr)));
 }
 function infoHTML(){
   const m=cur;
@@ -3044,7 +3257,7 @@ function infoHTML(){
     ${depCount>m.directDep[sel].length?(LANG==='en'?`<p class="tip" style="margin:2px 0 0">Indirectly, it unlocks <b style="color:var(--navy)">${depCount}</b> courses total by the end of the plan (shaded grey in the tree).</p>`:`<p class="tip" style="margin:2px 0 0">وبشكل غير مباشر، تفتح لك <b style="color:var(--navy)">${depCount}</b> مادة إجمالاً حتى نهاية الخطة (مظلّلة بالرمادي في الشجرة).</p>`):''}
     ${m.directPre[sel].length?row(LANG==='en'?'Directly needs first':'تحتاج قبلها مباشرة',m.directPre[sel],'pre',''):''}
     ${k==='lock'&&missing.length?row(LANG==='en'?'Missing':'ناقصك',missing,'pre',''):''}
-    ${m.co[sel].length?row(LANG==='en'?'Taken together with':'تؤخذ معها',m.co[sel],'co',''):''}`;
+    ${m.co[sel].length?row(LANG==='en'?'Co-requisite with':'متزامنة مع',m.co[sel],'co',''):''}`;
 }
 function applySel(){
   const m=cur,tree=$('tree'); if(!tree)return;
@@ -3063,6 +3276,10 @@ function applySel(){
     p.classList.toggle('out',out);p.classList.toggle('in',inn);
     p.setAttribute('marker-end',out||inn?'url(#ahn)':'url(#ah)');
     if(out||inn)svg.appendChild(p);
+  });
+  coPaths.forEach(p=>{
+    const on=has&&(p.__e[0]===sel||p.__e[1]===sel);
+    p.classList.toggle('on',on); if(on)svg.appendChild(p);
   });
   $('tinfo').innerHTML=infoHTML();
 }
