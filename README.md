@@ -247,6 +247,7 @@ a.mcard:hover{transform:translateY(-4px);box-shadow:0 18px 34px -20px color-mix(
 .tnode.dep{background:var(--gray);border-color:var(--gray-b);color:#1f2937}
 .tnode.dep .tcode{background:rgba(255,255,255,.55);color:#2b3442}
 .tnode.pre{background:#eef1fb;border:1.5px dashed var(--navy)}
+.tnode.thide{display:none!important}
 .tnode.co{background:#fff6e3;border:1.5px dashed #d08700;color:var(--ink)}
 .lg-co{width:22px!important;height:0!important;border:0!important;border-top:2.5px dashed #d08700!important;border-radius:0!important}
 svg.links .c{fill:none;stroke:#d08700;stroke-width:1.8;stroke-dasharray:5 4;stroke-linecap:round;opacity:.95;transition:opacity .25s}
@@ -2260,7 +2261,9 @@ MAJORS.forEach(m=>{
   const seen={};
   m.sems=m.plan.map((sem,ci)=>sem.map(([code,name,cr,ar])=>{
     const k=code+'|'+name; seen[k]=(seen[k]||0)+1;
-    return {id:k+'|'+seen[k],code,name,ar:ar||'',cr,col:ci,uni:/^(1900-|SSC |Dolc |Deic )xxx$/i.test(code)};
+    return {id:k+'|'+seen[k],code,name,ar:ar||'',cr,col:ci,uni:/^(1900-|SSC |Dolc |Deic )xxx$/i.test(code),
+      /* ما تطلع في الخطة الشجرية: اختياري القسم، اختياري الجامعة، العقيدة والثقافة */
+      noTree:/xxx$/i.test(code)||/elective/i.test(name)||/^(1900-|SSC |Dolc |Deic )\d{3}$/i.test(code)};
   }));
   m.total=m.sems.flat().reduce((s,c)=>s+c.cr,0);
 });
@@ -2939,7 +2942,7 @@ function renderPlan(m,startTab){
 
     <nav class="tabs"><div class="wrap tabs-in" role="tablist">
       <button class="tab" role="tab" data-tab="grad">${t('إكمال جدولي وساعاتي')} <span class="cnt" id="tabRem">0</span></button>
-      <button class="tab" role="tab" data-tab="tree">${t('الخطة الشجرية')} <span class="cnt">${m.all.length}</span></button>
+      <button class="tab" role="tab" data-tab="tree">${t('الخطة الشجرية')} <span class="cnt">${m.all.filter(c=>!c.noTree).length}</span></button>
       <button class="tab" role="tab" data-tab="gpa">${t('احسب مُعدلي 🧮')}</button>
       <button class="tab" role="tab" data-tab="about">${t('عن الموقع ⭐️')}</button>
     </div></nav>
@@ -3017,7 +3020,7 @@ function renderPlan(m,startTab){
             <div class="tcol">
               <div class="thead"><small>${LANG==='en'?'Level':'المستوى'}</small><b>${LANG==='en'?ci+1:LEVELS_AR[ci].replace('المستوى ','')}</b></div>
               ${list.map(c=>`
-                <button class="tnode" data-i="${c.i}">
+                <button class="tnode${c.noTree?' thide':''}" data-i="${c.i}">
                   <span class="stt"></span>
                   <span class="tcode">${esc(c.code)}</span>
                   <span class="tname">${esc(c.name)}<small>${esc(c.ar)}</small></span>
@@ -3086,9 +3089,10 @@ function refresh(initial){
     n.classList.remove('st-done','st-open','st-lock');n.classList.add('st-'+k);
     n.querySelector('.stt').textContent=ICON[k];
   });
-  $('fDone').textContent=stt.filter(x=>x==='done').length;
-  $('fOpen').textContent=stt.filter(x=>x==='open').length;
-  $('fLock').textContent=stt.filter(x=>x==='lock').length;
+  const sttT=stt.filter((x,i)=>!m.all[i].noTree);
+  $('fDone').textContent=sttT.filter(x=>x==='done').length;
+  $('fOpen').textContent=sttT.filter(x=>x==='open').length;
+  $('fLock').textContent=sttT.filter(x=>x==='lock').length;
   if(!initial&&$('tinfo'))$('tinfo').innerHTML=infoHTML();
   m.sems.forEach((list,i)=>{
     const vis=list.filter(c=>!c.uni),n=vis.filter(c=>state.has(c.id)).length;
@@ -3225,11 +3229,11 @@ function drawLinks(){
       <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1,1 L9,5 L1,9 z" fill="#b7bdb1"/></marker>
       <marker id="ahn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1,1 L9,5 L1,9 z" fill="#1e2a5a"/></marker>
     </defs>`;
-    paths=m.edges.map(e=>{
+    paths=m.edges.filter(e=>!m.all[e[0]].noTree&&!m.all[e[1]].noTree).map(e=>{
       const p=document.createElementNS('http://www.w3.org/2000/svg','path');
       p.setAttribute('class','e');p.setAttribute('marker-end','url(#ah)');p.__e=e;svg.appendChild(p);return p;
     });
-    coPaths=m.coEdges.map(e=>{
+    coPaths=m.coEdges.filter(e=>!m.all[e[0]].noTree&&!m.all[e[1]].noTree).map(e=>{
       const p=document.createElementNS('http://www.w3.org/2000/svg','path');
       p.setAttribute('class','c');p.__e=e;svg.appendChild(p);return p;
     });
