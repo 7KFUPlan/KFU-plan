@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5a0a10" id="themeColor">
-<title>خطتك كفو</title>
+<title>خطتك في كفو</title>
 <meta name="description" content="تابع خطتك الدراسية واحسب معدلك - كلية الهندسة، جامعة الملك فيصل">
 <meta property="og:type" content="website">
-<meta property="og:title" content="خطتك كفو - جامعة الملك فيصل">
+<meta property="og:title" content="خطتك في كفو - جامعة الملك فيصل">
 <meta property="og:description" content="تابع خطتك الدراسية، اكتشف المواد المتاحة، واحسب معدلك بسهولة - كلية الهندسة، جامعة الملك فيصل">
 <meta property="og:image" content="https://7kfuplan.github.io/KFU-plan/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://7kfuplan.github.io/KFU-plan/">
 <meta property="og:locale" content="ar_SA">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="خطتك كفو - جامعة الملك فيصل">
+<meta name="twitter:title" content="خطتك في كفو - جامعة الملك فيصل">
 <meta name="twitter:description" content="تابع خطتك الدراسية، اكتشف المواد المتاحة، واحسب معدلك بسهولة - كلية الهندسة، جامعة الملك فيصل">
 <meta name="twitter:image" content="https://7kfuplan.github.io/KFU-plan/og-image.png">
 <link rel="manifest" href="manifest.json">
@@ -261,26 +261,23 @@ svg.links .c{fill:none;stroke:#d08700;stroke-width:1.8;stroke-dasharray:5 4;stro
 .tree .tnode .stt{top:6px;right:6px;font-size:.66rem}
 .tree .tnode.st-done .stt{width:15px;height:15px;font-size:.56rem;top:6px}
 @media(max-width:900px){
-  .tree{column-gap:12px}
-  .tree .tnode{align-items:center;justify-content:center;text-align:center;padding:9px 2px;min-height:46px}
-  .tree .tnode .tname,.tree .tnode .tcr,.tree .tnode .stt{display:none}
-  .tree .tnode .tcode{align-self:center;background:none!important;padding:0;text-align:center;line-height:1.3;color:inherit;font-size:.7rem}
-  .tree .tnode.st-done{background:var(--grn-2)}
-  .tree .tnode.sel .tcode{color:#fff}
+  /* الجوال: المستويات تحت بعض (بدون سحب جانبي) والمادة باسمها الكامل */
+  .tree{display:flex;flex-direction:column;gap:30px}
+  .tcol{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:9px;align-items:stretch}
+  .tree .thead{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px}
+  .tree .thead small{display:inline;font-size:.86rem;font-weight:700;color:var(--acc-d)}
+  .tree .thead b{font-size:.86rem}
+  .tree .tnode{padding:7px 7px 8px;border-radius:12px}
+  .tree .tnode .tcode{font-size:.62rem;padding:2px 5px}
+  .tree .tnode .tname{font-size:.7rem;line-height:1.3}
+  .tree .tnode .tname small{font-size:.66rem;margin-top:2px}
+  .tree .tnode .tcr{font-size:.6rem}
+  .tree .tnode .stt{top:5px;right:5px;font-size:.6rem}
+  .tree .tnode.st-done .stt{width:14px;height:14px;font-size:.52rem;top:5px}
 }
 @media(max-width:600px){
-  .tree-card{margin-inline:-12px;border-radius:16px;padding:10px 0}
-  .tree-scroll{padding:0 7px}
-  .tree{column-gap:8px}
-  .tcol{gap:7px}
-  .tree .tnode{border-radius:8px;padding:5px 1px;min-height:40px;border-width:1px}
-  .tree .tnode .tcode{font-size:.56rem;font-weight:700;letter-spacing:-.2px}
-  .tree .tnode.st-open{box-shadow:0 0 0 1.5px rgba(31,164,99,.25)}
-  .tree .thead{padding:5px 1px;border-radius:8px}
-  .tree .thead small{font-size:.5rem}
-  .tree .thead b{font-size:.6rem}
-  svg.links .e{stroke-width:1}
-  svg.links .c{stroke-width:1.5;stroke-dasharray:3 2.5}
+  .tree-card{margin-inline:-10px;border-radius:16px;padding:12px 0}
+  .tree-scroll{padding:0 9px}
 }
 svg.links{position:absolute;left:0;top:0;pointer-events:none;z-index:0;overflow:visible}
 svg.links .e{fill:none;stroke:#c3c9bd;stroke-width:1.3;opacity:.75;transition:opacity .25s}
@@ -2380,7 +2377,7 @@ async function shareProgress(m){
   const wrap=document.createElement('div');
   const bg=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#f7f8f4';
   wrap.style.cssText=`position:fixed;left:-9999px;top:0;background:${bg};padding:28px;width:820px;border-radius:20px;font-family:${getComputedStyle(document.body).fontFamily}`;
-  wrap.innerHTML=`<div style="text-align:center;margin-bottom:16px"><div style="font-size:2rem">${esc(m.icon)}</div><h2 style="margin:6px 0 2px;font-size:1.25rem;color:var(--ink,#1f2a24)">${esc(mTitle(m))}</h2><p style="margin:0;color:var(--muted,#6b756d);font-size:.85rem">${esc(mSub(m))}</p></div>${summary.outerHTML}${hint?hint.outerHTML:''}${table?table.outerHTML:''}<p style="text-align:center;margin:16px 0 0;color:var(--muted,#6b756d);font-size:.75rem">${esc(LANG==='en'?'Kfu Plan - KFU':'خطتك كفو - جامعة الملك فيصل')}</p>`;
+  wrap.innerHTML=`<div style="text-align:center;margin-bottom:16px"><div style="font-size:2rem">${esc(m.icon)}</div><h2 style="margin:6px 0 2px;font-size:1.25rem;color:var(--ink,#1f2a24)">${esc(mTitle(m))}</h2><p style="margin:0;color:var(--muted,#6b756d);font-size:.85rem">${esc(mSub(m))}</p></div>${summary.outerHTML}${hint?hint.outerHTML:''}${table?table.outerHTML:''}<p style="text-align:center;margin:16px 0 0;color:var(--muted,#6b756d);font-size:.75rem">${esc(LANG==='en'?'Kfu Plan - KFU':'خطتك في كفو - جامعة الملك فيصل')}</p>`;
   wrap.querySelectorAll('.lvlcells').forEach(el=>{ el.style.flexWrap='wrap'; el.style.overflowX='visible'; });
   wrap.querySelectorAll('.lvlrow').forEach(el=>{ el.style.flexWrap='wrap'; });
   wrap.querySelectorAll('.sem-all').forEach(el=>{ el.style.display='none'; });
@@ -2437,7 +2434,7 @@ const T={
 "عبّي كل الحقول الأول (معدلك، ساعاتك، المعدل اللي تبيه، وعدد الساعات الجايه).":"Fill in all the fields first (your GPA, your hours, your target GPA, and the coming hours).",
 "ماشاء الله، معدلك خلاص وصل هدفك أو أعلى منه 🎉":"Mashallah, your GPA is already at or above your target 🎉",
 "ما راح توصله بهالعدد من الساعات حتى لو جبت A+ بكلها — زوّد عدد الساعات أو راجع هدفك.":"You won't reach it in that many hours even with straight A+ — add more hours or revisit your target.",
-"حياك في خطتك كفو! 👋":"Welcome to Kfu Plan! 👋",
+"حياك في خطتك في كفو! 👋":"Welcome to Kfu Plan! 👋",
 "اضغط على أي مادة عشان تعلّمها منجزة، وتصير خضراء وينقص عداد الساعات لحاله.":"Tap any course to mark it done — it turns green and the hours counter drops on its own.",
 "روح لتبويب «الخطة الشجرية» وشوف أسهم توضّحلك كل مادة تحتاج ايش قبلها، وتفتح لك ايش بعدها.":"Go to the “Course Tree” tab to see arrows showing what each course needs first, and what it unlocks next.",
 "اسحب الجداول يمين ويسار، واستخدم زر «شارك/اطبع» عشان تصدّر أو تطبع ملخص تقدمك بألوانه.":"Swipe the tables side to side, and use the “Share/Print” button to export or print a colored summary of your progress.",
@@ -2459,7 +2456,7 @@ const T={
 "لما ترسل رابط الموقع بتيليجرام أو واتساب، يطلع بصورة وعنوان ووصف بدل ما يطلع رابط عادي.":"When you share the site's link on Telegram or WhatsApp, it shows up with an image, title and description instead of a plain link.",
 "شارك أو اطبع تقدمك":"Share or print your progress",
 "زر بسيط يصدّرلك أو يطبعلك ملخص ملون لتقدمك في خطتك، تقدر ترسله أو تطبعه.":"A simple button that exports or prints a colored summary of your plan progress, ready to send or print.",
-"خطتك كفو":"Kfu Plan",
+"خطتك في كفو":"Kfu Plan",
 "تابع خطتك الشجرية واعرف كم ساعة باقي لك للتخرج - جامعة الملك فيصل":"Track your course tree and see how many hours you have left — King Faisal University",
 "اختر تخصصك للبدء":"Choose your major to start",
 "إكمال جدولي وساعاتي":"My Schedule & Hours",
@@ -2870,14 +2867,14 @@ function majorCards(mode){
   }).join('');
 }
 function renderHome(startTab){
-  document.title=LANG==='en'?'Kfu Plan':'خطتك كفو';
+  document.title=LANG==='en'?'Kfu Plan':'خطتك في كفو';
   applyTheme(null); app.dataset.page='home'; app.dataset.major=''; cur=null;
   app.innerHTML=`
     <header class="hero"><div class="wrap">
       ${langToggleHTML()}
       <div class="hero-in">
         <div class="badge wordmark">كفو</div>
-        <div><h1>${t('خطتك كفو')}</h1><p>${t('تابع خطتك الشجرية واعرف كم ساعة باقي لك للتخرج - جامعة الملك فيصل')}</p></div>
+        <div><h1>${t('خطتك في كفو')}</h1><p>${t('تابع خطتك الشجرية واعرف كم ساعة باقي لك للتخرج - جامعة الملك فيصل')}</p></div>
       </div>
       <div class="pill"><i></i>${t('اختر تخصصك للبدء')}</div>
     </div></header>
@@ -2927,7 +2924,7 @@ const C=2*Math.PI*66;
 function renderPlan(m,startTab){
   cur=m;state=load(m);extra=loadExtra(m);syncUni(m);save(m,state);sel=null;filt=null;paths=[];coPaths=[];svgReady=false;buildGraph(m);
   applyTheme(m.id);
-  document.title=mTitle(m)+' — '+(LANG==='en'?'Kfu Plan':'خطتك كفو');
+  document.title=mTitle(m)+' — '+(LANG==='en'?'Kfu Plan':'خطتك في كفو');
   app.dataset.page='plan';app.dataset.major=m.id;
   app.innerHTML=`
     <header class="hero"><div class="wrap">
@@ -3194,8 +3191,15 @@ function toggleSem(i,e){
 /* ---- الخطة الشجرية ---- */
 function select(i){ sel=(sel===i)?null:i; filt=null; applySel(); }
 
+function treeStacked(){ const t=$('tree'); return !!t&&getComputedStyle(t).display==='flex'; }
+function vPath(A,B,tr,end){
+  const x1=A.left+A.width/2-tr.left,y1=A.bottom-tr.top,x2=B.left+B.width/2-tr.left,y2=B.top-tr.top;
+  const dy=Math.max(8,(y2-y1)*.5);
+  return `M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2-end}`;
+}
 function edgePath(a,b,tr){
   const A=a.getBoundingClientRect(),B=b.getBoundingClientRect();
+  if(treeStacked())return vPath(A,B,tr,2);
   const x1=A.right-tr.left,y1=A.top+A.height/2-tr.top,x2=B.left-tr.left,y2=B.top+B.height/2-tr.top;
   const dx=Math.max(4,(x2-x1)*.45);
   return `M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2-2},${y2}`;
@@ -3204,6 +3208,16 @@ function edgePath(a,b,tr){
 let coPaths=[];
 function coPath(m,nodes,i,j,tr){
   let a=m.all[i],b=m.all[j];
+  if(treeStacked()){
+    let A=nodes[i].getBoundingClientRect(),B=nodes[j].getBoundingClientRect();
+    if(Math.abs(A.top-B.top)<4){            /* نفس الصف: خط أفقي بين المادتين */
+      if(A.left>B.left)[A,B]=[B,A];
+      const y=A.top+A.height/2-tr.top;
+      return `M${A.right-tr.left},${y} L${B.left-tr.left},${y}`;
+    }
+    if(A.top>B.top)[A,B]=[B,A];
+    return vPath(A,B,tr,0);
+  }
   if(a.col===b.col){
     let A=nodes[i].getBoundingClientRect(),B=nodes[j].getBoundingClientRect();
     if(A.top>B.top)[A,B]=[B,A];
@@ -3311,7 +3325,7 @@ function showOnboarding(){
   const ov=document.createElement('div');
   ov.className='onboard-ov';
   ov.innerHTML=`<div class="onboard-card">
-    <h3>${t('حياك في خطتك كفو! 👋')}</h3>
+    <h3>${t('حياك في خطتك في كفو! 👋')}</h3>
     <div class="onboard-steps">
       <div class="ostep"><span class="oi">👆</span><div><b>${LANG==='en'?'Tap to complete':'اضغط عشان تخلّص'}</b><span>${t('اضغط على أي مادة عشان تعلّمها منجزة، وتصير خضراء وينقص عداد الساعات لحاله.')}</span></div></div>
       <div class="ostep"><span class="oi">🌳</span><div><b>${LANG==='en'?'The tree':'الشجرة'}</b><span>${t('روح لتبويب «الخطة الشجرية» وشوف أسهم توضّحلك كل مادة تحتاج ايش قبلها، وتفتح لك ايش بعدها.')}</span></div></div>
