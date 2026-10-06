@@ -260,24 +260,40 @@ svg.links .c{fill:none;stroke:#d08700;stroke-width:1.8;stroke-dasharray:5 4;stro
 .tree .tnode .tcr{font-size:.64rem}
 .tree .tnode .stt{top:6px;right:6px;font-size:.66rem}
 .tree .tnode.st-done .stt{width:15px;height:15px;font-size:.56rem;top:6px}
-@media(max-width:900px){
-  /* الجوال: المستويات تحت بعض (بدون سحب جانبي) والمادة باسمها الكامل */
-  .tree{display:flex;flex-direction:column;gap:30px}
-  .tcol{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:9px;align-items:stretch}
-  .tree .thead{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px}
-  .tree .thead small{display:inline;font-size:.86rem;font-weight:700;color:var(--acc-d)}
-  .tree .thead b{font-size:.86rem}
-  .tree .tnode{padding:7px 7px 8px;border-radius:12px}
-  .tree .tnode .tcode{font-size:.62rem;padding:2px 5px}
-  .tree .tnode .tname{font-size:.7rem;line-height:1.3}
-  .tree .tnode .tname small{font-size:.66rem;margin-top:2px}
-  .tree .tnode .tcr{font-size:.6rem}
-  .tree .tnode .stt{top:5px;right:5px;font-size:.6rem}
-  .tree .tnode.st-done .stt{width:14px;height:14px;font-size:.52rem;top:5px}
+.scroll-hint{display:none}
+/* الآيباد واللابتوب الصغير: الثمان مستويات كاملة بعرض الشاشة والأسماء كاملة */
+@media(max-width:1100px){
+  .tree-scroll{padding:0 10px}
+  .tree{column-gap:10px}
+  .tcol{gap:8px}
+  .tree .thead{padding:6px 2px;border-radius:10px}
+  .tree .thead small{font-size:.6rem}
+  .tree .thead b{font-size:.74rem}
+  .tree .tnode{padding:6px 5px 7px;border-radius:10px;gap:2px}
+  .tree .tnode .tcode{font-size:.56rem;padding:1px 4px;border-radius:6px}
+  .tree .tnode .tname{font-size:.6rem;line-height:1.28;overflow-wrap:break-word;hyphens:auto}
+  .tree .tnode .tname small{font-size:.58rem;margin-top:2px}
+  .tree .tnode .tcr{font-size:.54rem}
+  .tree .tnode .stt{top:4px;right:4px;font-size:.52rem}
+  .tree .tnode.st-done .stt{width:12px;height:12px;font-size:.46rem;top:4px}
 }
-@media(max-width:600px){
-  .tree-card{margin-inline:-10px;border-radius:16px;padding:12px 0}
-  .tree-scroll{padding:0 9px}
+/* الجوال: نفس الترتيب بالعرض مع سحب يمين/يسار */
+@media(max-width:700px){
+  .scroll-hint{display:block}
+  .tree-card{margin-inline:-10px;border-radius:16px;padding:12px 0 6px}
+  .tree-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 12px 12px}
+  .tree{grid-template-columns:repeat(8,128px);column-gap:24px;width:max-content}
+  .tcol{gap:9px}
+  .tree .thead{padding:7px 4px;border-radius:12px}
+  .tree .thead small{font-size:.68rem}
+  .tree .thead b{font-size:.86rem}
+  .tree .tnode{padding:8px 8px 9px;border-radius:12px;gap:3px}
+  .tree .tnode .tcode{font-size:.64rem;padding:2px 6px;border-radius:8px}
+  .tree .tnode .tname{font-size:.72rem;line-height:1.32;hyphens:manual}
+  .tree .tnode .tname small{font-size:.66rem}
+  .tree .tnode .tcr{font-size:.62rem}
+  .tree .tnode .stt{top:6px;right:6px;font-size:.62rem}
+  .tree .tnode.st-done .stt{width:14px;height:14px;font-size:.52rem;top:6px}
 }
 svg.links{position:absolute;left:0;top:0;pointer-events:none;z-index:0;overflow:visible}
 svg.links .e{fill:none;stroke:#c3c9bd;stroke-width:1.3;opacity:.75;transition:opacity .25s}
@@ -2480,7 +2496,7 @@ const T={
 "منجزة":"Done",
 "متاحة لك":"Open",
 "مقفلة":"Locked",
-"↔ اسحب يميناً ويساراً لتنقّل بين الفصول":"↔ Swipe left/right to move between semesters",
+"↔ اسحب يميناً ويساراً لتنقّل بين المستويات":"↔ Swipe left/right to move between levels",
 "المادة المختارة":"Selected course",
 "تفتحها":"Unlocks",
 "تحتاجها قبلها":"Needs first",
@@ -2664,9 +2680,9 @@ function tgIcon(){
 const GPA_GRADES=[
   ['A+','A+  ·  5.00'],['A','A  ·  4.75'],['B+','B+  ·  4.50'],['B','B  ·  4.00'],
   ['C+','C+  ·  3.50'],['C','C  ·  3.00'],['D+','D+  ·  2.50'],['D','D  ·  2.00'],
-  ['E','E  ·  1.00'],['F','F  ·  0.00']
+  ['F','F  ·  1.00']
 ];
-const GPA_POINTS={'A+':5,'A':4.75,'B+':4.5,'B':4,'C+':3.5,'C':3,'D+':2.5,'D':2,'E':1,'F':0};
+const GPA_POINTS={'A+':5,'A':4.75,'B+':4.5,'B':4,'C+':3.5,'C':3,'D+':2.5,'D':2,'F':1};
 function gpaRowHTML(row,locked){
   row = row || {name:'',hours:'',grade:''};
   return `<div class="gpa-row${locked?' locked':''}">
@@ -2718,7 +2734,7 @@ function gpaHTML(){
 }
 const GPA_KEY='gpa-calc-v1';
 function loadGpaState(){
-  try{ return JSON.parse(localStorage.getItem(GPA_KEY)) || null }catch(e){ return null }
+  try{ return JSON.parse((localStorage.getItem(GPA_KEY)||'null').replace(/:"E"/g,':"F"')) || null }catch(e){ return null }
 }
 function saveGpaState(){
   try{
@@ -3011,6 +3027,7 @@ function renderPlan(m,startTab){
           <span><i class="lg-pre"></i>${t('تحتاجها قبلها')}</span>
           <span><i class="lg-co"></i>${t('متزامنة (تؤخذ مع بعض)')}</span>
         </div>
+        <p class="scroll-hint">${t('↔ اسحب يميناً ويساراً لتنقّل بين المستويات')}</p>
         <div class="tree-card"><div class="tree-scroll"><div class="tree" id="tree">
           <svg class="links" id="links"></svg>
           ${m.sems.map((list,ci)=>`
