@@ -358,6 +358,16 @@ svg.links .e.in{stroke:var(--navy);stroke-width:2;stroke-dasharray:6 5;opacity:.
 .rev-note.ok{background:#eaf6ee;border:1px solid #b7e0c3;color:#1f6b3a}
 .rev-note.bad{background:#fdeced;border:1px solid #ee9aa3;color:#7a1f2b}
 .rev-note.done{background:#fff7e6;border:1px solid #f0dcae;color:#7a5a1e}
+.tg-plan{margin-top:14px;border:1px solid color-mix(in srgb,var(--acc) 16%,#fff);border-radius:16px;overflow:hidden}
+.tg-plan.hidden{display:none}
+.tg-plan h4{margin:0;padding:11px 14px;font-size:.9rem;background:var(--tint);color:var(--acc-d)}
+.tg-plan table{width:100%;border-collapse:collapse;font-size:.86rem}
+.tg-plan th{font-weight:600;color:var(--muted);font-size:.74rem;padding:8px 10px;text-align:center;border-bottom:1px solid color-mix(in srgb,var(--acc) 12%,#fff)}
+.tg-plan td{padding:9px 10px;white-space:nowrap;text-align:center;border-bottom:1px solid color-mix(in srgb,var(--acc) 8%,#fff)}
+.tg-plan tr:last-child td{border-bottom:none}
+.tg-plan td b{color:var(--acc-d);font-weight:800}
+.tg-plan .gl{display:inline-block;margin-inline-start:6px;padding:1px 7px;border-radius:999px;background:var(--tint);font-size:.74rem;font-weight:700;color:var(--acc-d)}
+.tg-hint{font-size:.72rem;color:var(--muted);margin-top:5px;font-weight:500}
 .site-foot{margin-top:44px;background:var(--acc-d);color:#fff;text-align:center;padding:30px 0 calc(26px + env(safe-area-inset-bottom,0px))}
 .site-foot .wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
 .contact-h{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:2px}
@@ -2450,6 +2460,27 @@ const T={
 "المعدل اللي تطمح له":"The GPA you're aiming for",
 "كم ساعة بتاخذ قبل ما توصل الهدف":"How many hours until you reach that target",
 "احسب المطلوب":"Calculate what's needed",
+"عطنا معدلك وساعاتك الحالية، والمعدل اللي تطمح له، ونطلع لك خطة فصل بفصل توصلك له، وأعلى معدل تقدر توصله لين تتخرج.":"Give us your current GPA and hours and the GPA you're aiming for, and we'll build a semester-by-semester plan to get there — plus the highest GPA you can reach before graduating.",
+"كم ساعة تاخذ بالفصل":"Hours you take per semester",
+"كم ساعة باقية لك لين تتخرج":"Hours left until you graduate",
+"تنحسب لحالها من المواد اللي علّمتها منجزة في خطتك.":"Filled in automatically from the courses you marked done in your plan.",
+"لو فتحت الحاسبة من صفحة تخصصك، تنحسب لحالها من خطتك.":"Open this calculator from your major's page and it's filled in from your plan.",
+"المعدل المطلوب بالفصل الجاي":"Needed GPA next semester",
+"أعلى معدل تقدر توصله لين تتخرج":"Highest GPA you can reach by graduation",
+"عبّي كل الحقول الأول (معدلك، ساعاتك، المعدل اللي تبيه، وساعات الفصل).":"Fill in all the fields first (your GPA, your hours, your target GPA, and hours per semester).",
+"المعدل لازم يكون بين 0 و 5.00 — تأكد من الأرقام اللي كتبتها.":"GPA must be between 0 and 5.00 — double-check what you typed.",
+"ساعات الفصل لازم تكون بين 1 و 30.":"Hours per semester must be between 1 and 30.",
+"الساعات الباقية ما تكون بالسالب.":"Remaining hours can't be negative.",
+"حسب خطتك ما باقي لك ساعات — معدلك الحالي هو معدل تخرجك 🎓":"According to your plan you have no hours left — your current GPA is your graduation GPA 🎓",
+"هدف 5.00 ما يوصله إلا اللي معدله 5.00 أصلًا — اكتب الساعات الباقية لك عشان نطلع لك أعلى معدل ممكن.":"Only a student already at 5.00 can reach 5.00 — enter your remaining hours and we'll show the highest GPA you can reach.",
+"هالهدف يحتاج أكثر من 20 فصل حتى لو جبت A+ بكل شي — اكتب الساعات الباقية لك عشان نطلع لك أعلى معدل ممكن.":"That target needs more than 20 semesters even with straight A+ — enter your remaining hours and we'll show the highest GPA you can reach.",
+"📅 المطلوب بكل مستوى":"📅 What you need in each level",
+"المستوى":"Level",
+"📅 خطتك فصل بفصل":"📅 Your semester-by-semester plan",
+"الفصل":"Semester",
+"الساعات":"Hours",
+"المعدل الفصلي المطلوب":"Needed semester GPA",
+"تراكمي بعده":"Cumulative after",
 "المعدل المطلوب بالساعات الجايه":"Needed average over those hours",
 "عبّي كل الحقول الأول (معدلك، ساعاتك، المعدل اللي تبيه، وعدد الساعات الجايه).":"Fill in all the fields first (your GPA, your hours, your target GPA, and the coming hours).",
 "ماشاء الله، معدلك خلاص وصل هدفك أو أعلى منه 🎉":"Mashallah, your GPA is already at or above your target 🎉",
@@ -2722,18 +2753,21 @@ function gpaHTML(){
     <p class="warn">${t('⚠️ حاسبة تقريبية لمساعدتك فقط، اعتمد دايمًا على بوابة الجامعة للمعدل الرسمي.')}</p>
 
     <h3>${t('🎯 تبي توصل معدل معين؟')}</h3>
-    <p class="lead">${t('عطنا معدلك وساعاتك الحالية، والمعدل اللي تطمح له، ونقولك بالضبط كم لازم يكون معدلك بالساعات الجايه عشان توصله.')}</p>
+    <p class="lead">${t('عطنا معدلك وساعاتك الحالية، والمعدل اللي تطمح له، ونطلع لك خطة فصل بفصل توصلك له، وأعلى معدل تقدر توصله لين تتخرج.')}</p>
     <div class="gpa-prev">
       <div class="gpa-field"><label>${t('معدلك التراكمي الحالي')}</label><input id="tgCur" type="number" min="0" max="5" step="0.01" inputmode="decimal" placeholder="${LANG==='en'?'e.g. 3.50':'مثلاً 3.50'}"></div>
       <div class="gpa-field"><label>${t('ساعاتك التراكمية الحالية')}</label><input id="tgCurH" type="number" min="0" inputmode="numeric" placeholder="${LANG==='en'?'e.g. 90':'مثلاً 90'}"></div>
       <div class="gpa-field"><label>${t('المعدل اللي تطمح له')}</label><input id="tgTarget" type="number" min="0" max="5" step="0.01" inputmode="decimal" placeholder="${LANG==='en'?'e.g. 4.00':'مثلاً 4.00'}"></div>
-      <div class="gpa-field"><label>${t('كم ساعة بتاخذ قبل ما توصل الهدف')}</label><input id="tgHours" type="number" min="1" inputmode="numeric" placeholder="${LANG==='en'?'e.g. 15':'مثلاً 15'}"></div>
+      <div class="gpa-field"><label>${t('كم ساعة تاخذ بالفصل')}</label><input id="tgHours" type="number" min="1" max="30" inputmode="numeric" placeholder="${LANG==='en'?'e.g. 18':'مثلاً 18'}"></div>
+      <div class="gpa-field" style="grid-column:1/-1"><label>${t('كم ساعة باقية لك لين تتخرج')}</label><input id="tgRemH" type="number" min="0" inputmode="numeric" placeholder="${LANG==='en'?'e.g. 100':'مثلاً 100'}"><div class="tg-hint" id="tgRemHint">${t('تنحسب لحالها من المواد اللي علّمتها منجزة في خطتك.')}</div></div>
     </div>
     <button id="tgCalc" class="gpa-calc-btn" type="button">${t('احسب المطلوب')}</button>
     <div id="tgResult" class="gpa-result hidden">
-      <div class="gstat hi" style="grid-column:1/-1"><b id="tgNeed">0.00</b><span>${t('المعدل المطلوب بالساعات الجايه')}</span></div>
+      <div class="gstat hi"><b id="tgNeed">0.00</b><span>${t('المعدل المطلوب بالفصل الجاي')}</span></div>
+      <div class="gstat"><b id="tgMax">—</b><span>${t('أعلى معدل تقدر توصله لين تتخرج')}</span></div>
     </div>
     <p id="tgNote" class="rev-note hidden"></p>
+    <div id="tgPlan" class="tg-plan hidden"></div>
   </div>`;
 }
 const GPA_KEY='gpa-calc-v1';
@@ -2747,7 +2781,7 @@ function saveGpaState(){
     }));
     localStorage.setItem(GPA_KEY, JSON.stringify({
       rows, prevHours:$('prevHours').value, prevGpa:$('prevGpa').value,
-      tgCur:$('tgCur')?.value||'', tgCurH:$('tgCurH')?.value||'', tgTarget:$('tgTarget')?.value||'', tgHours:$('tgHours')?.value||''
+      tgCur:$('tgCur')?.value||'', tgCurH:$('tgCurH')?.value||'', tgTarget:$('tgTarget')?.value||'', tgHours:$('tgHours')?.value||'', tgRemH:$('tgRemH')?.value||''
     }));
   }catch(e){}
 }
@@ -2762,7 +2796,9 @@ function initGpa(){
     $('prevHours').value=saved.prevHours||''; $('prevGpa').value=saved.prevGpa||'';
     $('tgCur').value=saved.tgCur||''; $('tgCurH').value=saved.tgCurH||'';
     $('tgTarget').value=saved.tgTarget||''; $('tgHours').value=saved.tgHours||'';
+    $('tgRemH').value=saved.tgRemH||'';
   }
+  fillPlanHours(box);
   box.addEventListener('input',saveGpaState);
   box.addEventListener('change',saveGpaState);
   box.addEventListener('click',e=>{
@@ -2775,7 +2811,7 @@ function initGpa(){
   $('prevHours').addEventListener('input',saveGpaState);
   $('prevGpa').addEventListener('input',saveGpaState);
   $('gpaCalc').addEventListener('click',computeGpa);
-  ['tgCur','tgCurH','tgTarget','tgHours'].forEach(id=>$(id).addEventListener('input',saveGpaState));
+  ['tgCur','tgCurH','tgTarget','tgHours','tgRemH'].forEach(id=>$(id).addEventListener('input',saveGpaState));
   $('tgCalc').addEventListener('click',computeTargetGpa);
 }
 function computeGpa(){
@@ -2800,33 +2836,134 @@ function nearestGradeLabel(v){
   for(const [g,val] of sorted){ if(val>=v-1e-9) return g; }
   return null;
 }
-function computeTargetGpa(){
-  const cur=+$('tgCur').value, curH=+$('tgCurH').value, target=+$('tgTarget').value, nextH=+$('tgHours').value;
-  const box=$('tgResult'), note=$('tgNote');
-  note.className='rev-note';
-  if(!curH||!target||!nextH||isNaN(cur)){
-    box.classList.add('hidden');
-    note.classList.remove('hidden'); note.classList.add('bad');
-    note.textContent=t('عبّي كل الحقول الأول (معدلك، ساعاتك، المعدل اللي تبيه، وعدد الساعات الجايه).');
-    saveGpaState(); return;
+/* لو الحاسبة داخل صفحة تخصص، نعبّي الساعات الباقية من المواد المنجزة في الخطة */
+function fillPlanHours(box){
+  const onPlan=!!(box&&box.closest('#p-gpa'))&&cur&&state;
+  const hint=$('tgRemHint');
+  if(!onPlan){ if(hint)hint.textContent=t('لو فتحت الحاسبة من صفحة تخصصك، تنحسب لحالها من خطتك.'); return; }
+  const rem=Math.max(0,cur.total-doneHours(cur,state));
+  $('tgRemH').value=rem;
+  const sf=$('tgHours').closest('.gpa-field'); if(sf)sf.style.display='none';
+  if(hint)hint.textContent=(LANG==='en'
+    ? `From your plan: ${rem} hours left (based on the courses you marked done).`
+    : `من خطتك: باقي ${rem} ساعة (حسب المواد اللي علّمتها منجزة).`);
+  if(!$('tgCurH').value){ const d=doneHours(cur,state); if(d)$('tgCurH').value=d; }
+}
+/* يوزّع معدل مطلوب على الفصول: يبدأ أعلى ثم ينزل تدريجيًا، والمتوسط الموزون بالساعات = avg */
+function spreadSemesters(avg,hours){
+  const n=hours.length, H=hours.reduce((a,b)=>a+b,0);
+  if(n===1) return [avg];
+  const spread=Math.min(5-avg, avg-1, 0.35);
+  let g=hours.map((h,i)=>avg+spread*(1-2*i/(n-1)));
+  for(let k=0;k<30;k++){
+    const diff=(avg*H-g.reduce((a,x,i)=>a+x*hours[i],0));
+    if(Math.abs(diff)<1e-9)break;
+    const free=hours.reduce((a,h,i)=>a+((diff>0?g[i]<5:g[i]>1)?h:0),0);
+    if(!free)break;
+    g=g.map((x,i)=>Math.min(5,Math.max(1,x+((diff>0?x<5:x>1)?diff/free:0))));
   }
-  const needed=(target*(curH+nextH) - cur*curH) / nextH;
+  /* تقريب لأعلى عشان ما ينزل المتوسط تحت المطلوب */
+  return g.map(x=>Math.min(5,Math.ceil(x*100-1e-6)/100));
+}
+function computeTargetGpa(){
+  const curV=$('tgCur').value, tgV=$('tgTarget').value;
+  const cur0=+curV, curH=+$('tgCurH').value, target=+tgV;
+  /* داخل صفحة التخصص: نحسب على مستويات الخطة نفسها (الساعات الباقية بكل مستوى) */
+  const onPlan=!!$('tgPlan').closest('#p-gpa')&&cur&&state;
+  const levels=onPlan ? cur.sems.map((list,i)=>({label:LEVELS()[i], h:list.reduce((a,c)=>a+(state.has(c.id)?0:c.cr),0)})).filter(l=>l.h>0) : null;
+  if(onPlan){ $('tgRemH').value=levels.reduce((a,l)=>a+l.h,0); }
+  const semH=onPlan?1:+$('tgHours').value;
+  const remV=$('tgRemH').value;
+  const hasRem=remV!=='' && !isNaN(+remV), remH=hasRem?+remV:Infinity;
+  const box=$('tgResult'), note=$('tgNote'), planBox=$('tgPlan');
+  note.className='rev-note'; planBox.classList.add('hidden'); planBox.innerHTML='';
+  const fail=msg=>{ box.classList.add('hidden'); note.classList.remove('hidden'); note.classList.add('bad'); note.textContent=msg; saveGpaState(); };
+  if(curV===''||!curH||tgV===''||!semH)
+    return fail(t('عبّي كل الحقول الأول (معدلك، ساعاتك، المعدل اللي تبيه، وساعات الفصل).'));
+  if(cur0<0||cur0>5||target<=0||target>5)
+    return fail(t('المعدل لازم يكون بين 0 و 5.00 — تأكد من الأرقام اللي كتبتها.'));
+  if(semH<1||semH>30)
+    return fail(t('ساعات الفصل لازم تكون بين 1 و 30.'));
+  if(hasRem&&remH<0)
+    return fail(t('الساعات الباقية ما تكون بالسالب.'));
+
   box.classList.remove('hidden'); note.classList.remove('hidden');
-  if(cur>=target){
+  const maxGpa=hasRem?(cur0*curH+5*remH)/(curH+remH):5;
+  $('tgMax').textContent=hasRem?maxGpa.toFixed(2):'—';
+
+  if(cur0>=target){
     $('tgNeed').textContent='—';
     note.classList.add('done');
     note.textContent=t('ماشاء الله، معدلك خلاص وصل هدفك أو أعلى منه 🎉');
-  }else if(needed>5){
+    saveGpaState(); return;
+  }
+  if(hasRem&&remH===0){
+    $('tgNeed').textContent='—';
+    note.classList.add('done');
+    note.textContent=t('حسب خطتك ما باقي لك ساعات — معدلك الحالي هو معدل تخرجك 🎓');
+    saveGpaState(); return;
+  }
+
+  /* كم ساعة يحتاج لو جاب A+ بكل شي؟ */
+  const hoursAtMax = target>=5 ? Infinity : curH*(target-cur0)/(5-target);
+  const reachable = isFinite(hoursAtMax) && hoursAtMax<=remH+1e-9;
+  if(!hasRem && reachable && hoursAtMax/semH>20){
     $('tgNeed').textContent='5.00+';
     note.classList.add('bad');
-    note.textContent=t('ما راح توصله بهالعدد من الساعات حتى لو جبت A+ بكلها — زوّد عدد الساعات أو راجع هدفك.');
+    note.textContent=t('هالهدف يحتاج أكثر من 20 فصل حتى لو جبت A+ بكل شي — اكتب الساعات الباقية لك عشان نطلع لك أعلى معدل ممكن.');
+    saveGpaState(); return;
+  }
+  if(!reachable && !hasRem){
+    $('tgNeed').textContent='5.00+';
+    note.classList.add('bad');
+    note.textContent=t('هدف 5.00 ما يوصله إلا اللي معدله 5.00 أصلًا — اكتب الساعات الباقية لك عشان نطلع لك أعلى معدل ممكن.');
+    saveGpaState(); return;
+  }
+  const goal = reachable ? target : maxGpa;
+
+  /* نقسّم الساعات على فصول كاملة (آخر فصل يمكن يكون أقل لو قرب التخرج) */
+  const needH = reachable ? hoursAtMax : remH;
+  let n, hours=[], labels=[];
+  if(onPlan){
+    let acc=0;
+    for(const l of levels){ hours.push(l.h); labels.push(l.label); acc+=l.h; if(acc>=needH-1e-9)break; }
+    n=hours.length;
   }else{
-    $('tgNeed').textContent=needed.toFixed(2);
-    const g=nearestGradeLabel(needed);
-    note.classList.add(needed>=4.5?'bad':'ok');
+    n=Math.max(1,Math.ceil(needH/semH-1e-9));
+    for(let i=0;i<n;i++){ const left=(hasRem?remH:Infinity)-i*semH; hours.push(Math.min(semH,left)); labels.push(LANG==='en'?'Semester '+(i+1):'الفصل '+(i+1)); }
+  }
+  const H=hours.reduce((a,b)=>a+b,0);
+  const avg=Math.min(5,(goal*(curH+H)-cur0*curH)/H);
+  const grades=spreadSemesters(avg,hours);
+
+  $('tgNeed').textContent=grades[0].toFixed(2);
+  note.classList.add(reachable?(avg>=4.5?'done':'ok'):'bad');
+  if(reachable){
     note.textContent=(LANG==='en'
-      ? `You need at least a "${g}" average across those hours to get there.`
-      : `يعني لازم يكون معدلك بهالساعات الجايه "${g}" أو أعلى عشان توصل هدفك.`);
+      ? (onPlan
+        ? `You can reach ${target.toFixed(2)} by the end of ${labels[n-1]} (${H} hours). Here's what you need in each level:`
+        : n===1
+        ? `You can reach ${target.toFixed(2)} next semester — you need at least a "${nearestGradeLabel(grades[0])}" average across ${hours[0]} hours.`
+        : `You can reach ${target.toFixed(2)} in ${n} semesters (${H} hours). Here's a semester-by-semester plan:`)
+      : (onPlan
+        ? `تقدر توصل ${target.toFixed(2)} بنهاية ${labels[n-1]} (${H} ساعة). هذا المطلوب منك بكل مستوى:`
+        : n===1
+        ? `تقدر توصل ${target.toFixed(2)} الفصل الجاي — لازم معدلك بـ${hours[0]} ساعة يكون "${nearestGradeLabel(grades[0])}" أو أعلى.`
+        : `تقدر توصل ${target.toFixed(2)} خلال ${n} فصول (${H} ساعة). هذي خطة مقترحة فصل بفصل:`));
+  }else{
+    note.textContent=(LANG==='en'
+      ? `${target.toFixed(2)} is above what's possible before you graduate. The highest you can reach is ${maxGpa.toFixed(2)} — that means A+ in all ${remH} remaining hours. Here's the plan for it:`
+      : `${target.toFixed(2)} أعلى من اللي يمديك توصله قبل التخرج. أعلى معدل تقدر توصله هو ${maxGpa.toFixed(2)}، وهذا لو جبت A+ في كل الـ${remH} ساعة الباقية. هذي خطته:`);
+  }
+
+  if(onPlan||n>1||!reachable){
+    let ch=curH, cp=cur0*curH;
+    const rows=grades.map((g,i)=>{
+      ch+=hours[i]; cp+=g*hours[i];
+      return `<tr><td>${labels[i]}</td><td>${hours[i]}</td><td><b>${g.toFixed(2)}</b><span class="gl" dir="ltr">${nearestGradeLabel(g)}</span></td><td>${Math.min(5,cp/ch).toFixed(2)}</td></tr>`;
+    }).join('');
+    planBox.innerHTML=`<h4>${onPlan?t('📅 المطلوب بكل مستوى'):t('📅 خطتك فصل بفصل')}</h4><table><thead><tr><th>${onPlan?t('المستوى'):t('الفصل')}</th><th>${t('الساعات')}</th><th>${t('المعدل الفصلي المطلوب')}</th><th>${t('تراكمي بعده')}</th></tr></thead><tbody>${rows}</tbody></table>`;
+    planBox.classList.remove('hidden');
   }
   saveGpaState();
 }
